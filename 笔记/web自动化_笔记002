@@ -1,0 +1,12 @@
+1.常用元素操作方法
+ 元素操作方法是元素对象提供的方法，元素对象是通过元素定位找回来的
+  模拟输入：element.send_keys("你自己想输入的字符串")
+  模拟点击: element.click()
+  模拟清除文本：element.clear()
+ 模拟清除文本实际场景：在真实web项目中很多输入框都有默认值，那么为了避免默认值影响实际数据的输入，需要先清除原有的数据信息，再进行输入
+2.常用的浏览器操作对象
+ 常用方法:浏览器操作方法是浏览器驱动对象提供的方法，浏览器驱动对象是通过webdriver.Chrome()实例化出来的
+  browser.maximize_window()  # 窗口最大化
+  browser.refresh()  #刷新页面
+  browser.forward()  #前进页面
+  browser.back()     #回退页面

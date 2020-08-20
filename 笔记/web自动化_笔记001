@@ -1,0 +1,60 @@
+1.class_name定位
+ 概念：使用元素class属性来进行定位 前提：元素有class属性
+ 方法：driver.find_element_by_class_name("元素的class属性的其中一个类名")
+    注意点：1、class属性可能包含多个，且使用空格进行分割；2、在使用class_name定位时只能挑选其中一个类名；3、挑选类名的时候注意要挑选所要定位元素所特有的类名，保障定位的唯一性
+2.Tag_name定位
+ 概念：使用元素标签名来定位
+ 方法：driver.find_element_by_tag_name("元素的标签名")
+    注意点：在html页面标签名存在大量的重复，所以一般是不建议使用
+3.link_text定位
+ 概念：专门用来定位超链接（<a>标签）的方法，使用超链接的文本内容来进行定位
+ 方法：driver.find_element_by_link_text("超链接的全部文本类容")
+    注意点：在使用link_text定位时，其参数一定时超链接的全部文本类容，任何字符和符号都不能遗漏
+4.partial_link_text定位
+ 概念：专门用来定位超链接(<a>标签)的方法，使用超链接的局部文本类容来进行定位
+ 方法：driver.find_element_by_partial_link_text("超链接的局部文本类容")
+    注意点：1.在挑选局部类容时，挑选能唯一表示该元素的部分类容；2.全部是局部的一种特殊情况；3.在挑选局部类容时，一定是连续不间断一截字符串
+5.find_elements返回一组元素
+ 概念：定位所有符合条件的元素对象，并且以列表形式返回
+ 方法：driver.find_elements_by_xxx("表示xxx所选中的定位方法所要求的值")
+    注意点：1.返回的是一个列表，需要取具体的某个元素时加上索引即可；2.索引起始值为0；
+6.Xpath定位
+ 定位方法：driver.find_element_by_xpath("xpath表达式")
+ **路径定位**
+  绝对路径：
+   概念：从最外层元素<html>标签开始到所要定位的元素之间所有经过的层级
+   表达式：起始为/html/body/.../指定元素
+   一般很少使用
+  相对路径：
+   概念：可以从任意元素开始查找指定元素对象
+   表达式：//开始，可以从任意一个元素来查找元素，注意目标元素一定是起始元素后代元素
+   注意点：在编写xpath表达式的时候如果匹配到多个符合条件的元素，可以通过下标来取具体的某个元素，但是索引起始值为1
+
+ **属性定位**
+  概念：利用元素自身的属性信息来定位元素
+  表达式：//*[@属性名='属性值']  //标签名[@属性名='属性值']  browser.find_element_by_xpath("//*[@placeholder='手机号码']")
+7.xpath属性与逻辑结合
+ 概念：利用元素的多个属性来限制定位为条件，解决属性且属性值重复的问题
+ 表达式：//*[@属性名1='属性值1' and @属性名2='属性值2']  //标签名[@属性名1='属性值1' and @属性名2='属性值2']
+        browser.find_element_by_xpath("//*[@placeholder='手机号码' and @class='ant-input']")
+ 注意点：一般情况下使用属性与逻辑结合的时候挑选两个属性来进行定位，超过2个属性限制的话则考虑其他的定位策略
+8.xpath层级与属性结合
+ 概念：当定位元素时，元素本身的信息不太方便定位指定的元素，则可以先定位其父元素或祖辈元素，再来定位目标元素
+ 表达式：//*[@属性名1='属性值1']/标签名[@属性名='属性值']  //标签名[@属性名1='属性值1']/标签名[@属性名='属性值']
+        browser.find_element_by_xpath("//div[@class='ant-tabs-nav ant-tabs-nav-animated']/div/div[2]")
+ 注意点：一般情况最多使用三层，超过三层则检查自己的表达式写的是否存在问题或者是有优化的地方
+9.xpath-延伸
+ 表达式：//*[text()='xxx'] 文本内容是xxx的元素   //*[contains(@attribute,'xxx')]属性中含有xxx的元素
+ 注意点：使用text()函数的xpath表达式其对应的文本信息是元素的完整的文本信息
+10.CSS定位
+ id选择器：#id属性值  browser.find_element_by_css_selector("#number")
+ 属性选择器：[属性名='属性值']  [属性名1='属性值1'] browser.find_element_by_css_selector("[id='numPassword']")
+ class选择器：.class属性的其中一个类名 browser.find_element_by_css_selector(".ant-checkbox-input")
+ 元素选择器：标签名 browser.find_element_by_css_selector("button")
+ 层级选择器：后代选择器 ：element1 element2  browser.find_element_by_css_selector(".ant-form-item-control button")
+ 延伸：根据元素的局部属性值定位元素   标签名[属性名='局部的属性值'] #局部属性值在挑选目标元素该属性特有一截字符串  browser.find_element_by_css_selector("[placeholder*='手机']")
+11.元素定位的另外一种写法
+ 方法名：driver.find_element(By.表示你要选择定位方式类属性,"选中定位方式所要求参数")   from selenium.webdriver.common.by import By
+
+ 对：元素对象
+ 错：浏览器驱动对象
